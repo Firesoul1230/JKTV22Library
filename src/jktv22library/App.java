@@ -4,7 +4,6 @@
  */
 package jktv22library;
 
-import entity.Author;
 import entity.Book;
 import entity.History;
 import entity.Reader;
@@ -19,9 +18,23 @@ import manager.ReaderManager;
  * @author Melnikov
  */
 class App {
-    private Book[] books = new Book[0];
-    private Reader[] readers = new Reader[0];
-    private History[] histories = new History [0];
+    private Book[] books;
+    private Reader[] readers;
+    private History[] histories;
+    private Scanner scanner;
+    private ReaderManager readerManager;
+    private BookManager bookManager;
+    private HistoryManager historyManager;
+    
+    public App() {
+        this.books = new Book[0];
+        this.readers = new Reader[0];
+        this.histories = new History [0];
+        this.scanner = new Scanner(System.in);
+        this.readerManager = new ReaderManager(scanner);
+        this.bookManager = new BookManager(scanner);
+        this.historyManager = new HistoryManager(scanner, bookManager, readerManager);
+    }
 
     void run() {
         boolean repeat = true;
@@ -32,6 +45,10 @@ class App {
             System.out.println("1. Add new Book");
             System.out.println("2. Add new Reader");
             System.out.println("3. Give out a book to read");
+            System.out.println("4. Print list readers");
+            System.out.println("5. Print list books");
+            System.out.println("6. Print list given out books");
+            System.out.println("7. Return book");
             System.out.print("Set task: ");
             int task = scanner.nextInt();scanner.nextLine();
             switch (task) {
@@ -39,16 +56,25 @@ class App {
                     repeat = false;
                     break;
                 case 1:
-                    BookManager bookManager = new BookManager(scanner);
                     addBookToArray(bookManager.addBook());
                     break;
                 case 2:
-                    ReaderManager readerManager = new ReaderManager(scanner);
                     addReaderToArray(readerManager.addReader());
                     break;
                 case 3:
-                    HistoryManager historyManager = new HistoryManager(scanner);
                     addHistoryToArray(historyManager.giveOutBook(books, readers));
+                    break;
+                case 4:
+                    readerManager.printListReaders(readers);
+                    break;
+                case 5:
+                    bookManager.printListBooks(books);
+                    break;
+                case 6:
+                    bookManager.printListGivenOutBooks(histories);
+                    break;
+                case 7:
+                    historyManager.returnBook(histories);
                     break;
                 default:
                     System.out.println("Select number from list!");
