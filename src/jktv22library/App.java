@@ -32,8 +32,8 @@ class App {
     public App() {
         this.saveManager = new SaveManager();
         this.books = saveManager.loadBooks();
-        this.readers = new Reader[0];
-        this.histories = new History [0];
+        this.readers = saveManager.loadReaders();
+        this.histories = saveManager.loadHistories();
         this.scanner = new Scanner(System.in);
         this.readerManager = new ReaderManager(scanner);
         this.bookManager = new BookManager(scanner);
@@ -67,6 +67,10 @@ class App {
                     addReaderToArray(readerManager.addReader());
                     break;
                 case 3:
+                    History history = historyManager.giveOutBook(books, readers);
+                    if(histories != null){
+                        addHistoryToArray(history);
+                    }
                     addHistoryToArray(historyManager.giveOutBook(books, readers));
                     break;
                 case 4:
@@ -79,7 +83,8 @@ class App {
                     bookManager.printListGivenOutBooks(histories);
                     break;
                 case 7:
-                    historyManager.returnBook(histories);
+                    saveManager.saveHistories(historyManager.returnBook(histories));
+                    
                     break;
                 default:
                     System.out.println("Select number from list!");
@@ -97,11 +102,13 @@ class App {
     private void addReaderToArray(Reader reader) {
         this.readers = Arrays.copyOf(readers, readers.length + 1);
         this.readers[readers.length - 1] = reader;
+        saveManager.saveReaders(readers);
     }
 
     private void addHistoryToArray(History history) {
         this.histories = Arrays.copyOf(histories, histories.length + 1);
         this.histories[histories.length - 1] = history;
+        saveManager.saveHistories(histories);
     }
     
 }

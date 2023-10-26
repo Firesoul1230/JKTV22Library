@@ -4,6 +4,7 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
  *
  * @author Melnikov
  */
-public class History {
+public class History implements Serializable {
     private Date dateOnHand;
     private Date dateBack;
     private Book book;

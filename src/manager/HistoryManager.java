@@ -10,6 +10,7 @@ import entity.History;
 import entity.Reader;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import tools.KeyboardInput;
 
 /**
  *
@@ -40,9 +41,9 @@ public class HistoryManager{
             System.out.printf("%d. %s %s %s%n",i+1,readers[i].getFirstname(),readers[i].getLastname(),readers[i].getPhone());
             
         }*/
-        ReaderManager readerManager = new ReaderManager (scanner);
+        
         readerManager.printListReaders(readers);
-        int selectedReaderNumber = scanner.nextInt(); scanner.nextLine();
+        int selectedReaderNumber = KeyboardInput.inputNumber(1, null);
         history.setReader(readers[selectedReaderNumber-1]);
         /*
         System.out.println("List books: ");
@@ -50,9 +51,9 @@ public class HistoryManager{
             System.out.printf("%d. %s. %d. %s%n",i+1,books[i].getTitle(),books[i].getPublishedYear(),Arrays.toString(books[i].getAuthors()));
             
         }*/
-        BookManager bookManager = new BookManager (scanner);
+        
         bookManager.printListBooks(books);
-        int selectedBooksNumber = scanner.nextInt(); scanner.nextLine();
+        int selectedBooksNumber = KeyboardInput.inputNumber(1, null);
         history.setBook(books[selectedBooksNumber-1]);
         
         history.setDateOnHand(new GregorianCalendar().getTime());
@@ -60,14 +61,15 @@ public class HistoryManager{
         return history;
     }
     
-    public void returnBook (History[] histories) {
-        BookManager bookManager = new BookManager(scanner);
+    public History[] returnBook (History[] histories) {
+        
         bookManager.printListGivenOutBooks(histories);
         System.out.print("Select book for return: ");
-        int historyNumber = scanner.nextInt(); scanner.nextLine();
+        int historyNumber = KeyboardInput.inputNumber(1, null);
         histories[historyNumber-1].setDateBack(new GregorianCalendar().getTime());
         System.out.printf("Book \"%s\" returned",
                 histories[historyNumber-1].getBook().getTitle()
         );
+        return histories;
     }
 }

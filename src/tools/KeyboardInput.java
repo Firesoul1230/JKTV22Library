@@ -16,14 +16,11 @@ import java.util.Scanner;
 public class KeyboardInput {
         
     public static int inputNumber(Integer min, Integer max){
-        if(max == null){
-            
-        }
+        int number = 0;
         if(min == null){
-            
+            number = min - 1;
         }
         Scanner scanner = new Scanner(System.in);
-        int number = min - 1;
         boolean isNumber = true;
         boolean repeat;
         do{
@@ -34,7 +31,28 @@ public class KeyboardInput {
                 scanner.nextLine();
                 isNumber = false;
             }
-            if((number >= min && number <= max) && isNumber){
+            if(min == null && max == null){
+                if(isNumber){
+                    repeat = false;
+                }
+            }
+            if(min == null && max != null){
+                if((number <= max) && isNumber){
+                  repeat = false;
+                 }else{
+                    System.out.printf("Enter number from next range: %d .. %d: ",min,max);
+                    isNumber = true;
+                    repeat = true;
+                 }
+            }else if(min != null && max == null){
+                if((number >= min) && isNumber){
+                  repeat = false;
+                 }else{
+                    System.out.printf("Enter number from next range: %d .. %d: ",min,max);
+                    isNumber = true;
+                    repeat = true;
+            }
+            }else if((number >= min && number <= max) && isNumber){
                 repeat = false;
             }else{
                 System.out.printf("Enter number from next range: %d .. %d: ",min,max);

@@ -30,7 +30,7 @@ private final Scanner scanner;
                     book.setPublishedYear(KeyboardInput.inputNumber(1, 2050));
                     
                     System.out.println("How many authors: ");
-                    int countAuthors = scanner.nextInt(); scanner.nextLine();
+                    int countAuthors = KeyboardInput.inputNumber(1, 10);
                     for (int i = 0; i < countAuthors; i++) {
                         System.out.println(i+1+" author:");
                         System.out.print("Author firstname: ");
@@ -50,7 +50,7 @@ private final Scanner scanner;
                 
                 StringBuilder sbAuthorsBook = new StringBuilder();
                 for (int j = 0; j < books[i].getAuthors().length; j++) {
-                    Author author = books[j].getAuthors()[j];
+                    Author author = books[i].getAuthors()[j];
                     sbAuthorsBook.append(author.getFirstname());
                     sbAuthorsBook.append(" ");
                     sbAuthorsBook.append(author.getLastname()+". ");
