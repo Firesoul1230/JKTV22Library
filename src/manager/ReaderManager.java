@@ -6,43 +6,43 @@
 package manager;
 
 import entity.Reader;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class ReaderManager {
-    private final Scanner scanner;
-
+private Scanner scanner;
     public ReaderManager(Scanner scanner) {
         this.scanner = scanner;
     }
 
     public Reader addReader() {
         Reader reader = new Reader();
-                    System.out.print("Enter First Name: ");
-                    reader.setFirstname(scanner.nextLine());
-                    System.out.print("Enter Last Name: ");
-                    reader.setLastname(scanner.nextLine());
-                    System.out.print("Enter Phone: ");
-                    reader.setPhone(scanner.nextLine());
-                    
-                    
-                    System.out.println("Added reader: ");
-                    System.out.println(reader.toString());
-                    return reader;
+        System.out.print("Enter firstname: ");
+        reader.setFirstname(scanner.nextLine());
+        System.out.print("Enter lastname: ");
+        reader.setLastname(scanner.nextLine());
+        System.out.print("Enter phone: ");
+        reader.setPhone(scanner.nextLine());
+        System.out.println("Added reader: ");
+        System.out.println(reader.toString());
+        return reader;
     }
-    
-    public void printListReaders (Reader[] readers) {
-            System.out.println("------ List readers ------");
-            for (int i = 0; i < readers.length; i++) {
-                System.out.printf("%d. %s %s. %s%n" , i+1,
-                        readers[i].getFirstname(),
-                        readers[i].getLastname(),
-                        readers[i].getPhone()
-                );
-            }
+
+    public void printListReaders(List<Reader> readers) {
+        System.out.println("------ List readers ------");
+        for (int i = 0; i < readers.size(); i++) {
+            System.out.printf("%d. %s %s. %s%n",
+                    i+1,
+                    readers.get(i).getFirstname(),
+                    readers.get(i).getLastname(),
+                    readers.get(i).getPhone()
+            );
+            
+        }
     }
     
 }

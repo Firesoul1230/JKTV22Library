@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Melnikov
  */
-public class History implements Serializable {
+public class History implements Serializable{
     private Date dateOnHand;
     private Date dateBack;
     private Book book;

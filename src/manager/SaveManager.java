@@ -14,106 +14,114 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class SaveManager {
-    public void saveBooks(Book[] books) {
+    
+    private final String BOOKS_FILENAME = "books";
+    private final String READERS_FILENAME = "readers";
+    private final String HISTORIES_FILENAME = "histories";
+    
+    public void saveBooks(List<Book> books){
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {
-            fos = new FileOutputStream("books");
+            fos = new FileOutputStream(BOOKS_FILENAME);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(books);
-            fos.flush();
+            oos.flush();
         } catch (FileNotFoundException ex) {
             System.out.println("File \"books\" does not exist");
         } catch (IOException ex) {
             System.out.println("Error I/O books");
         }
     }
-    public Book[] loadBooks(){
-        Book[] books = new Book[0];
+    public List<Book> loadBooks(){
+        List<Book> books = new ArrayList<>();
         FileInputStream fis;
         ObjectInputStream ois;
         try {
-            fis = new FileInputStream("books");
+            fis = new FileInputStream(BOOKS_FILENAME);
             ois = new ObjectInputStream(fis);
-            books = (Book[]) ois.readObject();
+            books = (List<Book>) ois.readObject();
         } catch (FileNotFoundException ex) {
-            System.out.println("File \"books\" does not exist");
+           System.out.println("File \"books\" does not exist"); 
         } catch (IOException ex) {
-            System.out.println("Error I/O books");
+           System.out.println("Error I/O books");
         } catch (ClassNotFoundException ex) {
             System.out.println("Class Book not found");
         }
         return books;
     }
-    
-    public void saveReaders(Reader[] readers) {
-        FileOutputStream fos;
-        ObjectOutputStream oos;
-        try {
-            fos = new FileOutputStream("readers");
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(readers);
-            fos.flush();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File \"readers\" does not exist");
-        } catch (IOException ex) {
-            System.out.println("Error I/O readers");
-        }
-    }
-    
-    public Reader[] loadReaders(){
-        Reader[] readers = new Reader[0];
+
+    public List<Reader> loadReaders() {
+        List<Reader> readers = new ArrayList<>();
         FileInputStream fis;
         ObjectInputStream ois;
         try {
-            fis = new FileInputStream("readers");
+            fis = new FileInputStream(READERS_FILENAME);
             ois = new ObjectInputStream(fis);
-            readers = (Reader[]) ois.readObject();
+            readers = (List<Reader>) ois.readObject();
         } catch (FileNotFoundException ex) {
-            System.out.println("File \"readers\" does not exist");
+           System.out.println("File \"readers\" does not exist"); 
         } catch (IOException ex) {
-            System.out.println("Error I/O readers");
+           System.out.println("Error I/O readers");
         } catch (ClassNotFoundException ex) {
             System.out.println("Class Reader not found");
         }
         return readers;
     }
-    
-    public void saveHistories(History[] histories) {
+
+    public void saveReaders(List<Reader> readers) {
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {
-            fos = new FileOutputStream("histories");
+            fos = new FileOutputStream(READERS_FILENAME);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(histories);
-            fos.flush();
+            oos.writeObject(readers);
+            oos.flush();
         } catch (FileNotFoundException ex) {
-            System.out.println("File \"histories\" does not exist");
+            System.out.println("File \"readers\" does not exist");
         } catch (IOException ex) {
-            System.out.println("Error I/O histories");
+            System.out.println("Error I/O readers");
         }
     }
-    
-    public History[] loadHistories(){
-        History[] histories = new History[0];
+
+    public List<History> loadHistories() {
+        List<History> histories = new ArrayList<>();
         FileInputStream fis;
         ObjectInputStream ois;
         try {
-            fis = new FileInputStream("histories");
+            fis = new FileInputStream(HISTORIES_FILENAME);
             ois = new ObjectInputStream(fis);
-            histories = (History[]) ois.readObject();
+            histories = (List<History>) ois.readObject();
+        } catch (FileNotFoundException ex) {
+           System.out.println("File \"histories\" does not exist"); 
+        } catch (IOException ex) {
+           System.out.println("Error I/O histories");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Class historie not found");
+        }
+        return histories;
+    }
+
+    public void saveHistories(List<History> histories) {
+        FileOutputStream fos;
+        ObjectOutputStream oos;
+        try {
+            fos = new FileOutputStream(HISTORIES_FILENAME);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(histories);
+            oos.flush();
         } catch (FileNotFoundException ex) {
             System.out.println("File \"histories\" does not exist");
         } catch (IOException ex) {
             System.out.println("Error I/O histories");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Class History not found");
         }
-        return histories;
     }
 }

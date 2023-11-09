@@ -9,20 +9,15 @@ import java.util.Scanner;
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
-
-
 public class KeyboardInput {
-        
     public static int inputNumber(Integer min, Integer max){
         int number = 0;
-        if(min == null){
-            number = min - 1;
-        }
+        
         Scanner scanner = new Scanner(System.in);
         boolean isNumber = true;
-        boolean repeat;
+        boolean repeat = true;
         do{
             try {
                 number = scanner.nextInt();
@@ -30,28 +25,28 @@ public class KeyboardInput {
             } catch (Exception e) {
                 scanner.nextLine();
                 isNumber = false;
+                number = 0;
             }
             if(min == null && max == null){
                 if(isNumber){
                     repeat = false;
                 }
-            }
-            if(min == null && max != null){
-                if((number <= max) && isNumber){
-                  repeat = false;
-                 }else{
+            }else if(min == null && max != null){
+                if(isNumber && (number <= max)){
+                    repeat = false;
+                }else{
                     System.out.printf("Enter number from next range: %d .. %d: ",min,max);
                     isNumber = true;
                     repeat = true;
-                 }
+                }
             }else if(min != null && max == null){
-                if((number >= min) && isNumber){
-                  repeat = false;
-                 }else{
+               if((number >= min) && isNumber){
+                    repeat = false;
+                }else{
                     System.out.printf("Enter number from next range: %d .. %d: ",min,max);
                     isNumber = true;
                     repeat = true;
-            }
+                }                     
             }else if((number >= min && number <= max) && isNumber){
                 repeat = false;
             }else{

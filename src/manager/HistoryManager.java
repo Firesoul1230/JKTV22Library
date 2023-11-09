@@ -9,67 +9,119 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import tools.KeyboardInput;
+
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class HistoryManager{
-    private final Scanner scanner;
-    private final ReaderManager readerManager;
-    private final BookManager bookManager;
-
-    public HistoryManager(Scanner scanner, BookManager bookManager, ReaderManager readerManager) {
+    private Scanner scanner;
+    private ReaderManager readerManager;
+    private BookManager bookManager;
+    
+    public HistoryManager(Scanner scanner,BookManager bookManager, ReaderManager readerManager) {
         this.scanner = scanner;
         this.readerManager = readerManager;
         this.bookManager = bookManager;
     }
-
-    public History giveOutBook(Book[] books, Reader[] readers) {
+    /**
+     * Алгоритм выдачи книги читателю.
+     *  1. вывести спиок читателей
+     *  2. попросить прользователя выбрать номер читателя из списка
+     *  3. добавить выбранного читателя из массива readers в history
+     *  4. сделать 1-3 пункт для книги
+     *  5. создавать history, только если book.getCount() > 0, иначе возвращать null
+     *  6. добавить в history дату выдачи книги (текущую дату)
+     */
+    public History giveOutBook(List<Book> books, List<Reader> readers){
         History history = new History();
-        /*
-         * 1. Вывести список читателей
-         * 2. Попросить пользователя выбрать номер читателя из списка
-         * 3. Добавить выбранного читателя из массива readers в history
-         * 4. Сделать 1-3 пункт для книги
-         * 5. Добавить в history дату выдачи книги (текущую дату)
-         */
-        /*System.out.println("List readers: ");
-        for (int i = 0; i < readers.length; i++) {
-            System.out.printf("%d. %s %s %s%n",i+1,readers[i].getFirstname(),readers[i].getLastname(),readers[i].getPhone());
-            
-        }*/
-        
         readerManager.printListReaders(readers);
         int selectedReaderNumber = KeyboardInput.inputNumber(1, null);
-        history.setReader(readers[selectedReaderNumber-1]);
-        /*
-        System.out.println("List books: ");
-        for (int i = 0; i < books.length; i++) {
-            System.out.printf("%d. %s. %d. %s%n",i+1,books[i].getTitle(),books[i].getPublishedYear(),Arrays.toString(books[i].getAuthors()));
-            
-        }*/
-        
+        history.setReader(readers.get(selectedReaderNumber-1));
         bookManager.printListBooks(books);
-        int selectedBooksNumber = KeyboardInput.inputNumber(1, null);
-        history.setBook(books[selectedBooksNumber-1]);
-        
-        history.setDateOnHand(new GregorianCalendar().getTime());
-        
-        return history;
+        int selectedBookNumber = KeyboardInput.inputNumber(1, null);
+        if(books.get(selectedBookNumber-1).getCount() > 0){
+            history.setBook(books.get(selectedBookNumber-1));
+            books.get(selectedBookNumber-1).setCount(books.get(selectedBookNumber-1).getCount()-1);
+            history.setDateOnHand(new GregorianCalendar().getTime());
+            return history;
+        }else{
+            System.out.println("All books are read");
+            return null;
+        }
     }
-    
-    public History[] returnBook (History[] histories) {
-        
-        bookManager.printListGivenOutBooks(histories);
+    /**
+     * Возврат книги
+     * Выводим список читаемых книг
+     * Выбираем возвращаемую книгу
+     * Если book.getCount() меньше book.getQuantity() вернет истину
+     *  выполняем увелечение count книги на 1 и возвращаем массив histories
+     * иначе возвращаем null
+     */
+    public List<History> returnBook(List<History> histories) {
+        bookManager.printListGiveOutBooks(histories);
         System.out.print("Select book for return: ");
         int historyNumber = KeyboardInput.inputNumber(1, null);
-        histories[historyNumber-1].setDateBack(new GregorianCalendar().getTime());
-        System.out.printf("Book \"%s\" returned",
-                histories[historyNumber-1].getBook().getTitle()
-        );
-        return histories;
+        if(histories.get(historyNumber-1).getBook().getCount() 
+                < histories.get(historyNumber-1).getBook().getQuantity()){
+            histories.get(historyNumber-1).getBook().setCount(
+                    histories.get(historyNumber-1).getBook().getCount()+1
+            );
+            histories.get(historyNumber-1).setDateBack(new GregorianCalendar().getTime());
+            System.out.printf("Book \"%s\" returned%n", 
+                    histories.get(historyNumber-1).getBook().getTitle()
+            );
+            return histories;
+        }else{
+            return null;
+        }
     }
+    /**
+     * Алгоритм метода
+     * 1. Создадим mapBooks
+     * 2. Проходим по всем элементам histories
+     *    если в mapBooks нет ключа с книгой из истории
+     *      добавляем ключ и устанавливаем значение 1
+     *    иначе
+     *      по ключу обновляем значение, увеличивая его на 1
+     * 3. отсортировать mapBooks по значениям
+     * 4. Вывести ключ и значение сортированного sortedMapBooks
+     */
+    public void RatingOfBooksByReadability(List<History> histories) {
+        Map<Book,Integer> mapBooks = new HashMap<>();
+        for (int i = 0; i < histories.size(); i++) {
+            if(!mapBooks.containsKey(histories.get(i).getBook())) {
+                mapBooks.put(histories.get(i).getBook(), 1);
+            }else{
+                mapBooks.put(histories.get(i).getBook(), mapBooks.get(histories.get(i).getBook())+1);
+            }
+        }
+        Map<Book, Integer> sortedMapBooks = mapBooks.entrySet()
+            .stream()
+            .sorted(Map.Entry.<Book, Integer>comparingByValue().reversed())
+            .collect(Collectors.toMap(
+            Map.Entry::getKey,
+            Map.Entry::getValue,
+            (oldValue, newValue) -> oldValue,
+            LinkedHashMap::new));
+        int n = 1;
+        for (Map.Entry<Book, Integer> entry : mapBooks.entrySet()) {
+            System.out.printf("%d. %s: %d%n",
+                    n,
+                    entry.getKey().getTitle(),
+                    entry.getValue()
+            );
+            n++;
+        }
+        
+    }
+    
 }
