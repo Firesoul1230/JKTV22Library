@@ -85,35 +85,38 @@ public class HistoryManager{
         }
     }
     /**
-     * Алгоритм метода
+     * Алгоритм метода 
      * 1. Создадим mapBooks
      * 2. Проходим по всем элементам histories
      *    если в mapBooks нет ключа с книгой из истории
      *      добавляем ключ и устанавливаем значение 1
      *    иначе
-     *      по ключу обновляем значение, увеличивая его на 1
+     *      по ключу обновляем значение увеличивая его на 1
      * 3. отсортировать mapBooks по значениям
      * 4. Вывести ключ и значение сортированного sortedMapBooks
+     *  
      */
     public void RatingOfBooksByReadability(List<History> histories) {
         Map<Book,Integer> mapBooks = new HashMap<>();
         for (int i = 0; i < histories.size(); i++) {
-            if(!mapBooks.containsKey(histories.get(i).getBook())) {
+            if(!mapBooks.containsKey(histories.get(i).getBook())){
                 mapBooks.put(histories.get(i).getBook(), 1);
             }else{
                 mapBooks.put(histories.get(i).getBook(), mapBooks.get(histories.get(i).getBook())+1);
             }
         }
+        //sort ???
         Map<Book, Integer> sortedMapBooks = mapBooks.entrySet()
             .stream()
             .sorted(Map.Entry.<Book, Integer>comparingByValue().reversed())
             .collect(Collectors.toMap(
-            Map.Entry::getKey,
-            Map.Entry::getValue,
-            (oldValue, newValue) -> oldValue,
-            LinkedHashMap::new));
+                Map.Entry::getKey, 
+                Map.Entry::getValue, 
+                (oldValue, newValue) -> oldValue, 
+                LinkedHashMap::new)
+            );
         int n = 1;
-        for (Map.Entry<Book, Integer> entry : mapBooks.entrySet()) {
+        for (Map.Entry<Book, Integer> entry : sortedMapBooks.entrySet()) {
             System.out.printf("%d. %s: %d%n",
                     n,
                     entry.getKey().getTitle(),
@@ -122,6 +125,10 @@ public class HistoryManager{
             n++;
         }
         
+    }
+
+    public void printMostReadingReader(List<History> histories) {
+        System.out.println("Implementation expected");
     }
     
 }
