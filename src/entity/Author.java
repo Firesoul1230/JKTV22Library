@@ -6,12 +6,23 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Melnikov
  */
+@Entity
 public class Author implements Serializable{
+    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Basic
+    @Column(unique = false)
     private String firstname;
     private String lastname;
 
@@ -38,12 +49,20 @@ public class Author implements Serializable{
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.firstname);
-        hash = 17 * hash + Objects.hashCode(this.lastname);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.firstname);
+        hash = 23 * hash + Objects.hashCode(this.lastname);
         return hash;
     }
 
@@ -62,14 +81,20 @@ public class Author implements Serializable{
         if (!Objects.equals(this.firstname, other.firstname)) {
             return false;
         }
-        return Objects.equals(this.lastname, other.lastname);
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        return true;
     }
+
+    
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Author{");
-        sb.append("firstname=").append(firstname);
+        sb.append("id=").append(id);
+        sb.append(", firstname=").append(firstname);
         sb.append(", lastname=").append(lastname);
         sb.append('}');
         return sb.toString();
