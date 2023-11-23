@@ -4,13 +4,21 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Melnikov
  */
-public class Author {
+@Entity
+public class Author implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstname;
     private String lastname;
 
@@ -22,12 +30,12 @@ public class Author {
         this.lastname = lastname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public Long getId() {
+        return id;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -38,11 +46,20 @@ public class Author {
         this.firstname = firstname;
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.firstname);
-        hash = 17 * hash + Objects.hashCode(this.lastname);
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.firstname);
+        hash = 13 * hash + Objects.hashCode(this.lastname);
         return hash;
     }
 
@@ -61,17 +78,26 @@ public class Author {
         if (!Objects.equals(this.firstname, other.firstname)) {
             return false;
         }
-        return Objects.equals(this.lastname, other.lastname);
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Author{");
-        sb.append("firstname=").append(firstname);
-        sb.append(", lastname=").append(lastname);
-        sb.append('}');
-        return sb.toString();
+        return "Author{" 
+                + "id=" 
+                + id 
+                + ", firstname=" 
+                + firstname 
+                + ", lastname=" 
+                + lastname 
+                + '}';
     }
+
     
 }

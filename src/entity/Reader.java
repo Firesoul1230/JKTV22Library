@@ -4,13 +4,21 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Melnikov
  */
-public class Reader {
+@Entity
+public class Reader implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstname;
     private String lastname;
     private String phone;
@@ -24,12 +32,12 @@ public class Reader {
         this.phone = phone;
     }
 
-    public String getPhone() {
-        return phone;
+    public Long getId() {
+        return id;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -48,12 +56,21 @@ public class Reader {
         this.lastname = lastname;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.firstname);
-        hash = 47 * hash + Objects.hashCode(this.lastname);
-        hash = 47 * hash + Objects.hashCode(this.phone);
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.firstname);
+        hash = 83 * hash + Objects.hashCode(this.lastname);
+        hash = 83 * hash + Objects.hashCode(this.phone);
         return hash;
     }
 
@@ -75,19 +92,28 @@ public class Reader {
         if (!Objects.equals(this.lastname, other.lastname)) {
             return false;
         }
-        return Objects.equals(this.phone, other.phone);
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Reader{");
-        sb.append("firstname=").append(firstname);
-        sb.append(", lastname=").append(lastname);
-        sb.append(", phone=").append(phone);
-        sb.append('}');
-        return sb.toString();
+        return "Reader{" 
+                + "id=" 
+                + id 
+                + ", firstname=" 
+                + firstname 
+                + ", lastname=" 
+                + lastname 
+                + ", phone=" 
+                + phone 
+                + '}';
     }
-    
+
     
 }

@@ -56,10 +56,10 @@ class App {
                     repeat = false;
                     break;
                 case 1:
-                    addBookToArray(bookManager.addBook());
+                    bookManager.createBook();
                     break;
                 case 2:
-                    addReaderToArray(readerManager.addReader());
+                    readerManager.createReader();
                     break;
                 case 3:
                     addHistoryToArray(historyManager.giveOutBook(books, readers));
@@ -68,7 +68,7 @@ class App {
                     readerManager.printListReaders(readers);
                     break;
                 case 5:
-                    bookManager.printListBooks(books);
+                    bookManager.printListBooks();
                     break;
                 case 6:
                     bookManager.printListGivenOutBooks(histories);
