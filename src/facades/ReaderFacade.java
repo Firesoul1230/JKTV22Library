@@ -22,7 +22,7 @@ public class ReaderFacade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
         this.em = emf.createEntityManager();
     }
-    public void createReader(Reader reader){
+    public void create(Reader reader){
         em.getTransaction().begin();
             em.persist(reader);
         em.getTransaction().commit();

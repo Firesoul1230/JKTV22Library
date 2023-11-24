@@ -6,6 +6,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Reader implements Serializable {
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String phone;
 
     public Reader() {

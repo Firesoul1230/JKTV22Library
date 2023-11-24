@@ -5,7 +5,7 @@
  */
 package facades;
 
-import entity.Book;
+import entity.History;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,27 +15,28 @@ import javax.persistence.Persistence;
  *
  * @author pupil
  */
-public class BookFacade {
+public class HistoryFacade {
     private EntityManager em;
 
-    public BookFacade() {
+    public HistoryFacade() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
         this.em = emf.createEntityManager();
     }
-    public void create(Book book){
+
+    public void create(History history){
         em.getTransaction().begin();
-            em.persist(book);
+            em.persist(history);
         em.getTransaction().commit();
     }
-    public Book find(Long id){
-        return em.find(Book.class, id);
+    public History find(Long id){
+        return em.find(History.class, id);
     }
-    public List<Book> findAll(){
-        return em.createQuery("SELECT book FROM Book book").getResultList();
+    public List<History> findAll(){
+        return em.createQuery("SELECT history FROM History history").getResultList();
     }
-    public void edit(Book book){
+    public void edit(History history){
         em.getTransaction().begin();
-            em.merge(book);
+            em.merge(history);
         em.getTransaction().commit();
     }
 }

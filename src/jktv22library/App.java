@@ -18,18 +18,12 @@ import manager.ReaderManager;
  * @author Melnikov
  */
 class App {
-    private Book[] books;
-    private Reader[] readers;
-    private History[] histories;
     private Scanner scanner;
     private ReaderManager readerManager;
     private BookManager bookManager;
     private HistoryManager historyManager;
     
     public App() {
-        this.books = new Book[0];
-        this.readers = new Reader[0];
-        this.histories = new History [0];
         this.scanner = new Scanner(System.in);
         this.readerManager = new ReaderManager(scanner);
         this.bookManager = new BookManager(scanner);
@@ -65,7 +59,7 @@ class App {
                     addHistoryToArray(historyManager.giveOutBook(books, readers));
                     break;
                 case 4:
-                    readerManager.printListReaders(readers);
+                    readerManager.printListReaders();
                     break;
                 case 5:
                     bookManager.printListBooks();
@@ -82,20 +76,4 @@ class App {
             System.out.println("---------------------------");
         }while(repeat);
     }
-
-    private void addBookToArray(Book book) {
-        this.books = Arrays.copyOf(books, books.length + 1);
-        this.books[books.length - 1] = book;
-    }
-
-    private void addReaderToArray(Reader reader) {
-        this.readers = Arrays.copyOf(readers, readers.length + 1);
-        this.readers[readers.length - 1] = reader;
-    }
-
-    private void addHistoryToArray(History history) {
-        this.histories = Arrays.copyOf(histories, histories.length + 1);
-        this.histories[histories.length - 1] = history;
-    }
-    
 }

@@ -71,7 +71,7 @@ private final BookFacade bookFacade;
 //                    }
                     System.out.println("Added book: ");
                     System.out.println(book.toString());
-                    bookFacade.createBook(book);
+                    bookFacade.create(book);
                     
     }
     

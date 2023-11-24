@@ -7,6 +7,7 @@ package manager;
 
 import entity.Reader;
 import facades.ReaderFacade;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,7 +23,7 @@ public class ReaderManager {
         this.readerFacade = new ReaderFacade();
     }
 
-    public Reader createReader() {
+    public void createReader() {
         Reader reader = new Reader();
                     System.out.print("Enter First Name: ");
                     reader.setFirstname(scanner.nextLine());
@@ -30,22 +31,31 @@ public class ReaderManager {
                     reader.setLastname(scanner.nextLine());
                     System.out.print("Enter Phone: ");
                     reader.setPhone(scanner.nextLine());
-                    
-                    
                     System.out.println("Added reader: ");
                     System.out.println(reader.toString());
-                    readerFacade.createReader(reader);
+                    readerFacade.create(reader);
     }
     
-    public void printListReaders (Reader[] readers) {
+    public void printListReaders () {
+            List<Reader> readers = readerFacade.findAll();
+            Long[] arrayReaderId = new Long[readers.size()];
             System.out.println("------ List readers ------");
-            for (int i = 0; i < readers.length; i++) {
+            for (int i = 0; i < readers.size(); i++) {
                 System.out.printf("%d. %s %s. %s%n" , i+1,
-                        readers[i].getFirstname(),
-                        readers[i].getLastname(),
-                        readers[i].getPhone()
+                        readers.get(i).getId(),
+                        readers.get(i).getFirstname(),
+                        readers.get(i).getLastname(),
+                        readers.get(i).getPhone()
                 );
+                arrayReaderId[i] = readers.get(i).getId();
             }
+            return arrayReaderId;
+    }
+    public List<Reader> readers(){
+        return readerFacade.findAll();
+    }
+    public Reader findById(Long id){
+        return readerFacade.find(id);
     }
     
 }

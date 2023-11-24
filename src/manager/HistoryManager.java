@@ -8,7 +8,9 @@ package manager;
 import entity.Book;
 import entity.History;
 import entity.Reader;
+import facades.HistoryFacade;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -19,15 +21,19 @@ public class HistoryManager{
     private final Scanner scanner;
     private final ReaderManager readerManager;
     private final BookManager bookManager;
+    private final HistoryManager historyFacade;
 
     public HistoryManager(Scanner scanner, BookManager bookManager, ReaderManager readerManager) {
         this.scanner = scanner;
         this.readerManager = readerManager;
         this.bookManager = bookManager;
+        this.historyFacade = new HistoryFacade();
     }
 
-    public History giveOutBook(Book[] books, Reader[] readers) {
+    public History giveOutBook() {
         History history = new History();
+        List<Reader> readers = readerManager.readers();
+        List<Book> books = bookManager.books();
         /*
          * 1. Вывести список читателей
          * 2. Попросить пользователя выбрать номер читателя из списка
@@ -35,34 +41,26 @@ public class HistoryManager{
          * 4. Сделать 1-3 пункт для книги
          * 5. Добавить в history дату выдачи книги (текущую дату)
          */
-        /*System.out.println("List readers: ");
-        for (int i = 0; i < readers.length; i++) {
-            System.out.printf("%d. %s %s %s%n",i+1,readers[i].getFirstname(),readers[i].getLastname(),readers[i].getPhone());
-            
-        }*/
-        ReaderManager readerManager = new ReaderManager (scanner);
-        readerManager.printListReaders(readers);
+        readerManager.printListReaders();
         int selectedReaderNumber = scanner.nextInt(); scanner.nextLine();
-        history.setReader(readers[selectedReaderNumber-1]);
-        /*
-        System.out.println("List books: ");
-        for (int i = 0; i < books.length; i++) {
-            System.out.printf("%d. %s. %d. %s%n",i+1,books[i].getTitle(),books[i].getPublishedYear(),Arrays.toString(books[i].getAuthors()));
-            
-        }*/
+        history.setReader(readers.get(selectedReaderNumber-1));
         BookManager bookManager = new BookManager (scanner);
-        bookManager.printListBooks(books);
+        bookManager.printListBooks();
         int selectedBooksNumber = scanner.nextInt(); scanner.nextLine();
-        history.setBook(books[selectedBooksNumber-1]);
-        
+        history.setBook(books.get(selectedBooksNumber-1));
         history.setDateOnHand(new GregorianCalendar().getTime());
-        
+        historyFacade.create(history);
+        System.out.printf("%s given to reader: %s %s%n",
+                history.getBook().getTitle(),
+                history.getReader().getFirstname(),
+                history.getReader().getLastname(),
+            );
         return history;
     }
     
     public void returnBook (History[] histories) {
-        BookManager bookManager = new BookManager(scanner);
-        bookManager.printListGivenOutBooks(histories);
+        List<History> histories = historyFacade.findAll();
+        printListGiveOutBooks();
         System.out.print("Select book for return: ");
         int historyNumber = scanner.nextInt(); scanner.nextLine();
         histories[historyNumber-1].setDateBack(new GregorianCalendar().getTime());

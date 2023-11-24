@@ -4,14 +4,24 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Melnikov
  */
-public class History {
+@Entity
+public class History implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Temporal
     private Date dateOnHand;
     private Date dateBack;
     private Book book;
@@ -27,12 +37,12 @@ public class History {
         this.reader = reader;
     }
 
-    public Reader getReader() {
-        return reader;
+    public Long getId() {
+        return id;
     }
 
-    public void setReader(Reader reader) {
-        this.reader = reader;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getDateOnHand() {
@@ -59,13 +69,22 @@ public class History {
         this.book = book;
     }
 
+    public Reader getReader() {
+        return reader;
+    }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.dateOnHand);
-        hash = 59 * hash + Objects.hashCode(this.dateBack);
-        hash = 59 * hash + Objects.hashCode(this.book);
-        hash = 59 * hash + Objects.hashCode(this.reader);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.dateOnHand);
+        hash = 29 * hash + Objects.hashCode(this.dateBack);
+        hash = 29 * hash + Objects.hashCode(this.book);
+        hash = 29 * hash + Objects.hashCode(this.reader);
         return hash;
     }
 
@@ -81,6 +100,9 @@ public class History {
             return false;
         }
         final History other = (History) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.dateOnHand, other.dateOnHand)) {
             return false;
         }
@@ -90,19 +112,28 @@ public class History {
         if (!Objects.equals(this.book, other.book)) {
             return false;
         }
-        return Objects.equals(this.reader, other.reader);
+        if (!Objects.equals(this.reader, other.reader)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("History{");
-        sb.append("dateOnHand=").append(dateOnHand);
-        sb.append(", dateBack=").append(dateBack);
-        sb.append(", book=").append(book);
-        sb.append(", reader=").append(reader);
-        sb.append('}');
-        return sb.toString();
+        return "History{" 
+                + "id=" 
+                + id 
+                + ", dateOnHand=" 
+                + dateOnHand 
+                + ", dateBack=" 
+                + dateBack 
+                + ", book=" 
+                + book 
+                + ", reader=" 
+                + reader 
+                + '}';
     }
+
+    
     
 }
