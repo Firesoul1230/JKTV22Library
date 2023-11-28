@@ -30,7 +30,7 @@ public class Book implements Serializable{
     @Column()
     private String title;
     private int publishedYear;
-    @OneToMany
+    @OneToMany()
     private List<Author> authors = new ArrayList<>();
 
     public Book() {
@@ -77,10 +77,10 @@ public class Book implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.title);
-        hash = 31 * hash + this.publishedYear;
-        hash = 31 * hash + Objects.hashCode(this.authors);
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.title);
+        hash = 79 * hash + this.publishedYear;
+        hash = 79 * hash + Objects.hashCode(this.authors);
         return hash;
     }
 
@@ -116,12 +116,11 @@ public class Book implements Serializable{
         return "Book{" 
                 + "id=" + id 
                 + ", title=" + title 
-                + ", publishedYear=" 
-                + publishedYear 
-                + ", authors=" 
-                + Arrays.toString(authors.toArray()) 
+                + ", publishedYear=" + publishedYear 
+                + ", authors=" + Arrays.toString(authors.toArray()) 
                 + '}';
     }
+
     
     
     

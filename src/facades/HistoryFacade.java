@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class HistoryFacade {
     private EntityManager em;
@@ -22,11 +22,10 @@ public class HistoryFacade {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
         this.em = emf.createEntityManager();
     }
-
     public void create(History history){
-        em.getTransaction().begin();
-            em.persist(history);
-        em.getTransaction().commit();
+       em.getTransaction().begin();
+          em.persist(history);
+       em.getTransaction().commit();
     }
     public History find(Long id){
         return em.find(History.class, id);
@@ -36,7 +35,9 @@ public class HistoryFacade {
     }
     public void edit(History history){
         em.getTransaction().begin();
-            em.merge(history);
-        em.getTransaction().commit();
+          em.merge(history);
+       em.getTransaction().commit();
     }
+    
+    
 }

@@ -56,10 +56,10 @@ public class Author implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.firstname);
-        hash = 13 * hash + Objects.hashCode(this.lastname);
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.firstname);
+        hash = 89 * hash + Objects.hashCode(this.lastname);
         return hash;
     }
 
@@ -90,12 +90,9 @@ public class Author implements Serializable {
     @Override
     public String toString() {
         return "Author{" 
-                + "id=" 
-                + id 
-                + ", firstname=" 
-                + firstname 
-                + ", lastname=" 
-                + lastname 
+                + "id=" + id 
+                + ", firstname=" + firstname 
+                + ", lastname=" + lastname 
                 + '}';
     }
 

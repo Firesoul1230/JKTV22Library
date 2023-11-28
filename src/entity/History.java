@@ -4,13 +4,14 @@
  */
 package entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -18,13 +19,16 @@ import javax.persistence.Temporal;
  * @author Melnikov
  */
 @Entity
-public class History implements Serializable {
+public class History {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Temporal
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOnHand;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateBack;
+    @OneToOne
     private Book book;
+    @OneToOne
     private Reader reader;
 
     public History() {
@@ -120,20 +124,19 @@ public class History implements Serializable {
 
     @Override
     public String toString() {
+        String dateBack = "";
+        if(this.dateBack != null){
+            dateBack = this.dateBack.toString();
+        }
         return "History{" 
-                + "id=" 
-                + id 
-                + ", dateOnHand=" 
-                + dateOnHand 
-                + ", dateBack=" 
-                + dateBack 
-                + ", book=" 
-                + book 
-                + ", reader=" 
-                + reader 
+                + "id=" + id 
+                + ", dateOnHand=" + dateOnHand
+                + ", dateBack=" + dateBack
+                + ", book=" + book
+                + ", reader=" + reader
                 + '}';
     }
 
-    
+   
     
 }

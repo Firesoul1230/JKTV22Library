@@ -68,11 +68,11 @@ public class Reader implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.firstname);
-        hash = 83 * hash + Objects.hashCode(this.lastname);
-        hash = 83 * hash + Objects.hashCode(this.phone);
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.firstname);
+        hash = 67 * hash + Objects.hashCode(this.lastname);
+        hash = 67 * hash + Objects.hashCode(this.phone);
         return hash;
     }
 
@@ -106,16 +106,14 @@ public class Reader implements Serializable {
     @Override
     public String toString() {
         return "Reader{" 
-                + "id=" 
-                + id 
-                + ", firstname=" 
-                + firstname 
-                + ", lastname=" 
-                + lastname 
-                + ", phone=" 
-                + phone 
+                + "id=" + id 
+                + ", firstname=" + firstname 
+                + ", lastname=" + lastname 
+                + ", phone=" + phone 
                 + '}';
     }
 
+    
+    
     
 }

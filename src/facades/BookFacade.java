@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class BookFacade {
     private EntityManager em;
@@ -23,9 +23,9 @@ public class BookFacade {
         this.em = emf.createEntityManager();
     }
     public void create(Book book){
-        em.getTransaction().begin();
-            em.persist(book);
-        em.getTransaction().commit();
+       em.getTransaction().begin();
+          em.persist(book);
+       em.getTransaction().commit();
     }
     public Book find(Long id){
         return em.find(Book.class, id);
@@ -35,7 +35,7 @@ public class BookFacade {
     }
     public void edit(Book book){
         em.getTransaction().begin();
-            em.merge(book);
-        em.getTransaction().commit();
+          em.merge(book);
+       em.getTransaction().commit();
     }
 }

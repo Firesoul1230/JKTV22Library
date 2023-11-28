@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author pupil
+ * @author Melnikov
  */
 public class ReaderFacade {
     private EntityManager em;
@@ -23,9 +23,9 @@ public class ReaderFacade {
         this.em = emf.createEntityManager();
     }
     public void create(Reader reader){
-        em.getTransaction().begin();
-            em.persist(reader);
-        em.getTransaction().commit();
+       em.getTransaction().begin();
+          em.persist(reader);
+       em.getTransaction().commit();
     }
     public Reader find(Long id){
         return em.find(Reader.class, id);
@@ -35,7 +35,7 @@ public class ReaderFacade {
     }
     public void edit(Reader reader){
         em.getTransaction().begin();
-            em.merge(reader);
-        em.getTransaction().commit();
+          em.merge(reader);
+       em.getTransaction().commit();
     }
 }
