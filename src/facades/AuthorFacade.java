@@ -6,7 +6,6 @@
 package facades;
 
 import entity.Author;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -15,29 +14,20 @@ import javax.persistence.Persistence;
  *
  * @author Melnikov
  */
-public class AuthorFacade {
+public class AuthorFacade extends AbstractFacade<Author>{
     private EntityManager em;
 
     public AuthorFacade() {
+        super(Author.class);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
         this.em = emf.createEntityManager();
     }
-    public void create(Author author){
-       em.getTransaction().begin();
-          em.persist(author);
-       em.getTransaction().commit();
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
-    public Author find(Long id){
-        return em.find(Author.class, id);
-    }
-    public List<Author> findAll(){
-        return em.createQuery("SELECT author FROM Author author").getResultList();
-    }
-    public void edit(Author author){
-        em.getTransaction().begin();
-          em.merge(author);
-       em.getTransaction().commit();
-    }
+    
     
     
 }
