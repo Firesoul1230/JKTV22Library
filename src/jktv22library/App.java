@@ -8,6 +8,7 @@ import managers.HistoryManager;
 import managers.ReaderManager;
 import java.util.Scanner;
 import managers.BookManager;
+import tools.EntityManagerSingleton;
 
 /**
  *
@@ -71,6 +72,7 @@ class App {
             }
             System.out.println("-----------------------------------------------------");
         }while(repeat);
+        EntityManagerSingleton.getInstance().closeEntityManager();
     }
 
    

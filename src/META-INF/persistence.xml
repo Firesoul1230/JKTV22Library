@@ -11,7 +11,7 @@
       <property name="javax.persistence.jdbc.user" value="jktv22library"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="jktv22library"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

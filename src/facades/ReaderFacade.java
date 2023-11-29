@@ -7,8 +7,7 @@ package facades;
 
 import entity.Reader;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import tools.EntityManagerSingleton;
 
 /**
  *
@@ -19,8 +18,10 @@ import javax.persistence.Persistence;
 
     public ReaderFacade() {
         super(Reader.class);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
-        this.em = emf.createEntityManager();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JKTV22LibraryPU");
+//        this.em = emf.createEntityManager();
+        EntityManagerSingleton entityManagerSingleton = EntityManagerSingleton.getInstance();
+        this.em = entityManagerSingleton.getEntityManager();
     }
 
     @Override

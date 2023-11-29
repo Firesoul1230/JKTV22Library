@@ -70,10 +70,10 @@ public class HistoryManager{
         historyFacade.edit(histories.get(historyNumber-1));
     }
     public void printListGiveOutBooks() {
-       List<History> histories = historyFacade.findAll();
+       List<History> histories = historyFacade.findAllReadingBooks();
        System.out.println("------- List books of hands --------"); 
         for (int i = 0; i < histories.size(); i++) {
-            if(histories.get(i).getDateBack() == null){
+//            if(histories.get(i).getDateBack() == null){
                 System.out.printf("%d. \"%s\" to read %s %s. %s%n",
                         histories.get(i).getId(),
                         histories.get(i).getBook().getTitle(),
@@ -81,7 +81,7 @@ public class HistoryManager{
                         histories.get(i).getReader().getLastname(),
                         histories.get(i).getReader().getPhone()
                 );
-            }
+//            }
             
         }
     }

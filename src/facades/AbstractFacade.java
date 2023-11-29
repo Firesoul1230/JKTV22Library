@@ -20,9 +20,15 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
     
     public void create(T entity){
+        try {
        getEntityManager().getTransaction().begin();
           getEntityManager().persist(entity);
        getEntityManager().getTransaction().commit();
+    } catch (Exception e) {
+        if(getEntityManager().getTransaction() != null && getEntityManager().getTransaction().isActive()){
+            getEntityManager().getTransaction().rollback();
+        }
+    }
     }
     
     public T find(Long id){
